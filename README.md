@@ -1,2 +1,2 @@
-# X_Path_Learning
+# XPath Learning Application
 Winforms Application to learn XPath
