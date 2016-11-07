@@ -79,19 +79,12 @@ namespace WindowsFormsCSharpLearning
             } else
             {
                 string xpath = this.xPath.Text;
-                if(xpath == null || xpath == "")
-                {
-                    return;
-                }
-                else
-                {
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(this.XmlText);
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(this.XmlText);
 
-                    XmlNodeList nodes = doc.DocumentElement.SelectNodes(xpath);
-                    XPathQueryResultTextBox.ResetText();
-                    XPathQueryResultTextBox.AppendText(XmlNodeListToString(nodes));
-                }               
+                XmlNodeList nodes = doc.DocumentElement.SelectNodes(xpath);
+                XPathQueryResultTextBox.ResetText();
+                XPathQueryResultTextBox.AppendText(XmlNodeListToString(nodes));
 
             }
             
@@ -111,8 +104,8 @@ namespace WindowsFormsCSharpLearning
 
             }
 
-            //return FormatXml(returnStr);
-            return FormatXml("<root>" + returnStr + "</root>");
+
+            return FormatXml(returnStr);
         }
 
 
@@ -121,8 +114,8 @@ namespace WindowsFormsCSharpLearning
             try
             {
                 //XDocument doc = XDocument.Parse(xml);
-                XElement.Parse(xml).Save(@"D:\\doc.xml");
-                string formattedXml = File.ReadAllText(@"D:\\doc.xml");
+                XElement.Parse(xml).Save(@"C:\doc.xml");
+                string formattedXml = File.ReadAllText(@"C:\doc.xml");
                 Console.WriteLine(formattedXml);
                 return formattedXml;
             }

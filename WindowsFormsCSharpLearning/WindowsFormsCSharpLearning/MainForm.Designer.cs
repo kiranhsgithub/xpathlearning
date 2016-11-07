@@ -338,9 +338,10 @@
             // 
             // XPathQueryResultTextBox
             // 
-            this.XPathQueryResultTextBox.Location = new System.Drawing.Point(45, 126);
+            this.XPathQueryResultTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.XPathQueryResultTextBox.Location = new System.Drawing.Point(0, 0);
             this.XPathQueryResultTextBox.Name = "XPathQueryResultTextBox";
-            this.XPathQueryResultTextBox.Size = new System.Drawing.Size(438, 328);
+            this.XPathQueryResultTextBox.Size = new System.Drawing.Size(639, 616);
             this.XPathQueryResultTextBox.TabIndex = 0;
             this.XPathQueryResultTextBox.Text = "";
             // 
@@ -356,9 +357,10 @@
             // 
             // FullXMLBox
             // 
-            this.FullXMLBox.Location = new System.Drawing.Point(29, 140);
+            this.FullXMLBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FullXMLBox.Location = new System.Drawing.Point(0, 0);
             this.FullXMLBox.Name = "FullXMLBox";
-            this.FullXMLBox.Size = new System.Drawing.Size(588, 270);
+            this.FullXMLBox.Size = new System.Drawing.Size(796, 616);
             this.FullXMLBox.TabIndex = 0;
             this.FullXMLBox.Text = "";
             // 
@@ -368,6 +370,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(218, 22);
             this.textBox1.TabIndex = 4;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // BrowseFileButton
             // 
