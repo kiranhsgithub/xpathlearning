@@ -42,6 +42,10 @@ namespace WindowsFormsCSharpLearning
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.BrowseFileButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.ErrorRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.xPath = new System.Windows.Forms.TextBox();
             this.ApplyXPath = new System.Windows.Forms.Button();
             this.SubmitButton = new System.Windows.Forms.Button();
@@ -49,6 +53,8 @@ namespace WindowsFormsCSharpLearning
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // StatusStrip1
@@ -79,14 +85,16 @@ namespace WindowsFormsCSharpLearning
             this.panel1.Controls.Add(this.XPathQueryResultTextBox);
             this.panel1.Location = new System.Drawing.Point(832, 9);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(615, 616);
+            this.panel1.Size = new System.Drawing.Size(615, 251);
             this.panel1.TabIndex = 2;
             // 
             // XPathQueryResultTextBox
             // 
-            this.XPathQueryResultTextBox.Location = new System.Drawing.Point(45, 126);
+            this.XPathQueryResultTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.XPathQueryResultTextBox.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.XPathQueryResultTextBox.Location = new System.Drawing.Point(0, 0);
             this.XPathQueryResultTextBox.Name = "XPathQueryResultTextBox";
-            this.XPathQueryResultTextBox.Size = new System.Drawing.Size(438, 328);
+            this.XPathQueryResultTextBox.Size = new System.Drawing.Size(615, 251);
             this.XPathQueryResultTextBox.TabIndex = 0;
             this.XPathQueryResultTextBox.Text = "";
             // 
@@ -102,9 +110,10 @@ namespace WindowsFormsCSharpLearning
             // 
             // FullXMLBox
             // 
-            this.FullXMLBox.Location = new System.Drawing.Point(29, 140);
+            this.FullXMLBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FullXMLBox.Location = new System.Drawing.Point(0, 0);
             this.FullXMLBox.Name = "FullXMLBox";
-            this.FullXMLBox.Size = new System.Drawing.Size(588, 270);
+            this.FullXMLBox.Size = new System.Drawing.Size(671, 616);
             this.FullXMLBox.TabIndex = 0;
             this.FullXMLBox.Text = "";
             this.FullXMLBox.TextChanged += new System.EventHandler(this.FullXMLBox_TextChanged);
@@ -133,12 +142,51 @@ namespace WindowsFormsCSharpLearning
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.panel5);
+            this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.panel2);
             this.panel3.Controls.Add(this.panel1);
             this.panel3.Location = new System.Drawing.Point(12, 226);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1450, 628);
             this.panel3.TabIndex = 6;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.ErrorRichTextBox);
+            this.panel5.Location = new System.Drawing.Point(832, 425);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(615, 200);
+            this.panel5.TabIndex = 5;
+            // 
+            // ErrorRichTextBox
+            // 
+            this.ErrorRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ErrorRichTextBox.ForeColor = System.Drawing.Color.Red;
+            this.ErrorRichTextBox.Location = new System.Drawing.Point(0, 0);
+            this.ErrorRichTextBox.Name = "ErrorRichTextBox";
+            this.ErrorRichTextBox.Size = new System.Drawing.Size(615, 200);
+            this.ErrorRichTextBox.TabIndex = 0;
+            this.ErrorRichTextBox.Text = "";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.listBox1);
+            this.panel4.Location = new System.Drawing.Point(832, 266);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(615, 153);
+            this.panel4.TabIndex = 4;
+            // 
+            // listBox1
+            // 
+            this.listBox1.ForeColor = System.Drawing.Color.DarkTurquoise;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(3, 3);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(609, 132);
+            this.listBox1.TabIndex = 0;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // xPath
             // 
@@ -194,6 +242,8 @@ namespace WindowsFormsCSharpLearning
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,5 +266,9 @@ namespace WindowsFormsCSharpLearning
         private System.Windows.Forms.Button ApplyXPath;
         private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel1;
         private System.Windows.Forms.Button SubmitButton;
+        private Panel panel5;
+        private RichTextBox ErrorRichTextBox;
+        private Panel panel4;
+        private ListBox listBox1;
     }
 }

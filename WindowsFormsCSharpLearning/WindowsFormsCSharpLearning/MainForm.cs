@@ -90,9 +90,35 @@ namespace WindowsFormsCSharpLearning
                         XmlDocument doc = new XmlDocument();
                         doc.LoadXml(this.XmlText);
 
-                        XmlNodeList nodes = doc.DocumentElement.SelectNodes(xpath);
+                        //XmlNodeList nodesList = doc.DocumentElement.SelectNodes(xpath);
+
+                        XPathNavigator nav = doc.CreateNavigator();
+                        XPathExpression expr = nav.Compile(xpath);
+                        XPathNodeIterator nodes = nav.Select(xpath);
+
+                        //Remove text before adding
                         XPathQueryResultTextBox.ResetText();
-                        XPathQueryResultTextBox.AppendText(XmlNodeListToString(nodes));
+
+                        while (nodes.MoveNext())
+                        {
+                            XPathNavigator node = nodes.Current.Clone();
+                            
+                            //next level of check even though text is reset before
+                            if (XPathQueryResultTextBox.Text.Length == 0)
+                            {
+                                XPathQueryResultTextBox.Text = node.OuterXml;
+                            }
+                            else
+                            {
+                                XPathQueryResultTextBox.AppendText(Environment.NewLine);
+                                XPathQueryResultTextBox.AppendText(node.OuterXml);
+                            }
+
+                        }
+
+
+                        //XPathQueryResultTextBox.ResetText();
+                        //XPathQueryResultTextBox.AppendText(XmlNodeListToString(nodesList));
 
                         resetStatusStrip();
                     }
@@ -196,7 +222,7 @@ namespace WindowsFormsCSharpLearning
 
         }
 
-        private void SubmitButton_Click(object sender, EventArgs e)
+        private async void SubmitButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -231,11 +257,53 @@ namespace WindowsFormsCSharpLearning
                 XPathDocument myXPathDoc = new XPathDocument(this.FileName);
                 XslCompiledTransform myXslTrans = new XslCompiledTransform();
                 myXslTrans.Load("..\\..\\XPathGenerator.xslt");
-                XmlTextWriter myWriter = new XmlTextWriter("D:\\result.html", null);
+
+                Stream stream = new MemoryStream();
+                XmlWriter writer = XmlWriter.Create(stream);
+                // ... build xml here
+
+                stream.Position = 0;
+                
+                XmlTextWriter myWriter = new XmlTextWriter("result.html", null);
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(this.XmlText);
                 XmlReader xmlReadB = new XmlTextReader(new StringReader(doc.DocumentElement.OuterXml));
                 myXslTrans.Transform(xmlReadB, null, myWriter);
+                myWriter.Close();
+
+                string filename = @"result.html";
+                char[] result;
+                StringBuilder builder = new StringBuilder("Sample XPaths: \n");
+
+                using (StreamReader reader = File.OpenText(filename))
+                {
+                    result = new char[reader.BaseStream.Length];
+                    await reader.ReadAsync(result, 0, (int)reader.BaseStream.Length);
+                }
+                List<string> XpathList = new List<string>();
+                StringBuilder line = new StringBuilder();
+                foreach (char c in result)
+                {
+                    builder.Append(c);
+                    line.Append(c);
+                    if(c == '\n')
+                    {                        
+                        XpathList.Add(line.ToString());
+                        line.Clear();
+                    }
+                    
+                }
+
+                listBox1.DataSource = XpathList;
+
+                //XPathExamples.ResetText();
+                //XPathExamples.AppendText(builder.ToString());
+                Console.WriteLine(builder.ToString());
+                
+
+
+
+
 
                 resetStatusStrip();
             }
@@ -247,11 +315,13 @@ namespace WindowsFormsCSharpLearning
 
         private void showStatusError(string message)
         {
-            ToolStripStatusLabel1.Text = "Exception: " + message;
+            string displayMessage = "Exception: " + message;
+            ToolStripStatusLabel1.Text = displayMessage;
             ToolStripStatusLabel1.ForeColor = Color.Red;
             StatusStrip1.Refresh();
-            MessageBox.Show("Exception: " + message, "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //MessageBox.Show(displayMessage, "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ErrorRichTextBox.ResetText();
+            ErrorRichTextBox.AppendText(displayMessage);
         }
 
         private void resetStatusStrip()
@@ -259,8 +329,15 @@ namespace WindowsFormsCSharpLearning
             ToolStripStatusLabel1.Text = "";
             ToolStripStatusLabel1.ForeColor = Color.Black;
             StatusStrip1.Refresh();
+            ErrorRichTextBox.ResetText();
         }
 
-        
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string curItem = listBox1.SelectedItem.ToString();
+            xPath.Text = curItem.Substring(0, curItem.Length - 1);
+            //SubmitButton_Click(sender, new EventArgs());
+
+        }
     }
 }
