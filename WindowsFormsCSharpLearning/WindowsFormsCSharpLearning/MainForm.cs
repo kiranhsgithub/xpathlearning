@@ -19,6 +19,8 @@ namespace WindowsFormsCSharpLearning
     {
         public string XmlText { get; set; }
         public string FileName { get; set; }
+        public string PreviousXPath { get; set; }
+        public string CurrentXPath { get; set; }
 
 
         public MainForm()
@@ -83,6 +85,9 @@ namespace WindowsFormsCSharpLearning
                     string xpath = this.xPath.Text;
                     if (xpath == null || xpath == "")
                     {
+                        XPathQueryResultTextBox.ResetText();
+                        XPathQueryResultTextBox.AppendText(this.XmlText);
+                        resetStatusStrip();
                         return;
                     }
                     else
@@ -169,15 +174,34 @@ namespace WindowsFormsCSharpLearning
 
         private bool validXml()
         {
-            if (this.XmlText == null || this.XmlText == "")
-            {
-                return false;
-            }           
 
+            string xmlString = this.XmlText;
+            if (String.IsNullOrEmpty(xmlString))
+            {
+                xmlString = FullXMLBox.Text;
+                if (String.IsNullOrEmpty(xmlString))
+                {
+                    return false;
+                }
+                this.XmlText = xmlString;
+                if(validateXml(xmlString))
+                {
+                    XmlReader xmlReader = XmlReader.Create(new StringReader(xmlString));
+                    XPathDocument myXPathDoc = new XPathDocument(xmlReader);
+                    applyTransformations(myXPathDoc);
+                }                
+            }
+
+            return validateXml(xmlString);
+
+        }
+
+        private static bool validateXml(string xmlString)
+        {
             try
             {
                 XmlReader xr = XmlReader.Create(
-                new StringReader(this.XmlText));
+                new StringReader(xmlString));
 
                 while (xr.Read()) { }
                 Console.WriteLine("XML Validation Success: " + true);
@@ -188,7 +212,6 @@ namespace WindowsFormsCSharpLearning
                 Console.WriteLine("XML Validation Failed : " + ex.Message);
                 return false;
             }
-           
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -222,7 +245,7 @@ namespace WindowsFormsCSharpLearning
 
         }
 
-        private async void SubmitButton_Click(object sender, EventArgs e)
+        private void SubmitButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -253,54 +276,8 @@ namespace WindowsFormsCSharpLearning
                 FullXMLBox.AppendText(text);
                 XPathQueryResultTextBox.ResetText();
                 XPathQueryResultTextBox.AppendText(text);
-
                 XPathDocument myXPathDoc = new XPathDocument(this.FileName);
-                XslCompiledTransform myXslTrans = new XslCompiledTransform();
-                myXslTrans.Load("..\\..\\XPathGenerator.xslt");
-
-                Stream stream = new MemoryStream();
-                XmlWriter writer = XmlWriter.Create(stream);
-                // ... build xml here
-
-                stream.Position = 0;
-                
-                XmlTextWriter myWriter = new XmlTextWriter("result.html", null);
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(this.XmlText);
-                XmlReader xmlReadB = new XmlTextReader(new StringReader(doc.DocumentElement.OuterXml));
-                myXslTrans.Transform(xmlReadB, null, myWriter);
-                myWriter.Close();
-
-                string filename = @"result.html";
-                char[] result;
-                StringBuilder builder = new StringBuilder("Sample XPaths: \n");
-
-                using (StreamReader reader = File.OpenText(filename))
-                {
-                    result = new char[reader.BaseStream.Length];
-                    await reader.ReadAsync(result, 0, (int)reader.BaseStream.Length);
-                }
-                List<string> XpathList = new List<string>();
-                StringBuilder line = new StringBuilder();
-                foreach (char c in result)
-                {
-                    builder.Append(c);
-                    line.Append(c);
-                    if(c == '\n')
-                    {                        
-                        XpathList.Add(line.ToString());
-                        line.Clear();
-                    }
-                    
-                }
-
-                listBox1.DataSource = XpathList;
-
-                generateNodeElementsList();
-
-                //XPathExamples.ResetText();
-                //XPathExamples.AppendText(builder.ToString());
-                Console.WriteLine(builder.ToString());
+                applyTransformations(myXPathDoc);
 
                 resetStatusStrip();
             }
@@ -308,6 +285,55 @@ namespace WindowsFormsCSharpLearning
             {                
                 showStatusError(ex.StackTrace);
             }            
+        }
+
+        private async void applyTransformations(XPathDocument myXPathDoc)
+        {
+            
+            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            myXslTrans.Load("..\\..\\XPathGenerator.xslt");
+
+            //Stream stream = new MemoryStream();
+            //XmlWriter writer = XmlWriter.Create(stream);
+            //stream.Position = 0;
+
+            XmlTextWriter myWriter = new XmlTextWriter("result.html", null);
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(this.XmlText);
+            XmlReader xmlReadB = new XmlTextReader(new StringReader(doc.DocumentElement.OuterXml));
+            myXslTrans.Transform(xmlReadB, null, myWriter);
+            myWriter.Close();
+
+            string filename = @"result.html";
+            char[] result;
+            StringBuilder builder = new StringBuilder("Sample XPaths: \n");
+
+            using (StreamReader reader = File.OpenText(filename))
+            {
+                result = new char[reader.BaseStream.Length];
+                await reader.ReadAsync(result, 0, (int)reader.BaseStream.Length);
+            }
+            List<string> XpathList = new List<string>();
+            StringBuilder line = new StringBuilder();
+            foreach (char c in result)
+            {
+                builder.Append(c);
+                line.Append(c);
+                if (c == '\n')
+                {
+                    XpathList.Add(line.ToString());
+                    line.Clear();
+                }
+
+            }
+
+            listBox1.DataSource = XpathList;
+
+            generateNodeElementsList();
+
+            //XPathExamples.ResetText();
+            //XPathExamples.AppendText(builder.ToString());
+            Console.WriteLine(builder.ToString());
         }
 
         private void generateNodeElementsList()
@@ -425,11 +451,25 @@ namespace WindowsFormsCSharpLearning
             }
 
             string oldXPath = xPath.Text;
-            if(condition.Equals("contains"))
+            string replacableValue = "";
+            if (condition.Equals("contains"))
             {
-                xPath.Text = xPath.Text.Replace
-                    (nodeName, nodeName + "[" + condition 
-                    + "(text(),\"" + searchText + "\")]");
+                replacableValue  = nodeName + "[" + condition
+                    + "(text(),\"";
+
+                if(xPath.Text.Contains(replacableValue))
+                {
+                    string xpath = xPath.Text.Substring(0, xPath.Text.IndexOf(replacableValue) 
+                        + replacableValue.Length);
+                    xPath.Text = xpath + searchText + "\")]";
+                }
+                else
+                {
+                    xPath.Text = xPath.Text.Replace
+                    (nodeName, replacableValue + searchText + "\")]");
+                }
+                
+
             }
             else if(condition.Equals("starts-with(select parent)"))
             {
@@ -450,27 +490,63 @@ namespace WindowsFormsCSharpLearning
                     {
                         part2 = part1.Substring(1);
                         part3 = "";
-                        //xPath.Text = part0 + "[starts-with("
-                        //    + part2
-                        //     + ",\"" + searchText + "\")]";
                     }
                     
                 }
-                
-                xPath.Text = part0 + "[starts-with("
+
+                replacableValue = nodeName + "[starts-with(";
+                if (xPath.Text.Contains(replacableValue))
+                {
+                    int rIndex = oldXPath.IndexOf(replacableValue)
+                                            + replacableValue.Length;
+                    int eIndex = oldXPath.Length - 1;
+                    //MessageBox.Show("Start Index " +  rIndex + ", End Index : " + eIndex);
+                    string temPart2 = oldXPath.Substring(rIndex, eIndex - rIndex);
+
+                    int cIndex = temPart2.IndexOf(",\"");
+
+                    part2 = temPart2.Substring(0, cIndex);
+                    part3 = temPart2.Substring(cIndex, temPart2.Length - 1 - cIndex);
+                    xPath.Text = oldXPath.Substring(0, rIndex)
+                        + part2
+                        + ",\"" + searchText + "\")]";
+                    //+ part3;
+                }
+                else
+                {
+                    xPath.Text = part0 + "[starts-with("
                     + part2
                     + ",\"" + searchText + "\")]"
                     + part3;
+                }
+               
+
+
             }
             else if (condition.Equals("starts-with(self)"))
             {
                 //Example 
                 //   /catalog/book/author[starts-with(.,"Gam")]
-                xPath.Text = xPath.Text.Replace
-                    (nodeName, nodeName + "[starts-with(.,\"" + searchText + "\")]");
+
+                replacableValue = nodeName + "[starts-with(.,\"";
+
+                if (xPath.Text.Contains(replacableValue))
+                {
+                    string xpath = xPath.Text.Substring(0, xPath.Text.IndexOf(replacableValue)
+                        + replacableValue.Length);
+                    xPath.Text = xpath + searchText + "\")]";
+                }
+                else
+                {
+                    xPath.Text = xPath.Text.Replace
+                    (nodeName, replacableValue + searchText + "\")]");
+                }
+
+
+                //xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[starts-with(.,\"" + searchText + "\")]");
             }
             
-            MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
+            //MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
             Console.WriteLine("XPath Text : " + xPath);
 
         }
@@ -521,6 +597,12 @@ namespace WindowsFormsCSharpLearning
             //MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
             Console.WriteLine("XPath Text : " + xPath);
 
+        }
+
+        private void ResetAllButton_Click(object sender, EventArgs e)
+        {
+            this.Controls.Clear();
+            this.InitializeComponent();
         }
     }
 }

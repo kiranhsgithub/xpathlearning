@@ -69,6 +69,7 @@ namespace WindowsFormsCSharpLearning
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.ResetAllButton = new System.Windows.Forms.Button();
             this.StatusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -124,7 +125,7 @@ namespace WindowsFormsCSharpLearning
             this.panel2.Controls.Add(this.FullXMLBox);
             this.panel2.Location = new System.Drawing.Point(6, 41);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(674, 631);
+            this.panel2.Size = new System.Drawing.Size(677, 584);
             this.panel2.TabIndex = 3;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -133,7 +134,7 @@ namespace WindowsFormsCSharpLearning
             this.FullXMLBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FullXMLBox.Location = new System.Drawing.Point(0, 0);
             this.FullXMLBox.Name = "FullXMLBox";
-            this.FullXMLBox.Size = new System.Drawing.Size(674, 631);
+            this.FullXMLBox.Size = new System.Drawing.Size(677, 584);
             this.FullXMLBox.TabIndex = 0;
             this.FullXMLBox.Text = "";
             this.FullXMLBox.TextChanged += new System.EventHandler(this.FullXMLBox_TextChanged);
@@ -432,11 +433,23 @@ namespace WindowsFormsCSharpLearning
             this.label11.TabIndex = 25;
             this.label11.Text = "Attribute Value";
             // 
+            // ResetAllButton
+            // 
+            this.ResetAllButton.Location = new System.Drawing.Point(50, 118);
+            this.ResetAllButton.Name = "ResetAllButton";
+            this.ResetAllButton.Size = new System.Drawing.Size(152, 23);
+            this.ResetAllButton.TabIndex = 26;
+            this.ResetAllButton.Text = "Reset All";
+            this.ResetAllButton.UseVisualStyleBackColor = true;
+            this.ResetAllButton.Click += new System.EventHandler(this.ResetAllButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1474, 879);
+            this.Controls.Add(this.ResetAllButton);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -516,5 +529,6 @@ namespace WindowsFormsCSharpLearning
         private Label label9;
         private Label label10;
         private Label label11;
+        private Button ResetAllButton;
     }
 }
