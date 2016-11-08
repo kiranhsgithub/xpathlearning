@@ -296,21 +296,73 @@ namespace WindowsFormsCSharpLearning
 
                 listBox1.DataSource = XpathList;
 
+                generateNodeElementsList();
+
                 //XPathExamples.ResetText();
                 //XPathExamples.AppendText(builder.ToString());
                 Console.WriteLine(builder.ToString());
-                
-
-
-
-
 
                 resetStatusStrip();
             }
             catch(Exception ex)
-            {
-                showStatusError(ex.Message);
+            {                
+                showStatusError(ex.StackTrace);
             }            
+        }
+
+        private void generateNodeElementsList()
+        {
+            //TODO implement it
+            //XDocument doc = XDocument.Load("test.xml"); // Or whatever
+           
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(this.XmlText);
+            XmlNodeList nodeList = doc.SelectNodes("//*");
+            List<String> nodeListStr = new List<String>();
+            List<String> attributeListStr = new List<String>();
+            foreach(XmlNode node in nodeList)
+            {
+                if(!nodeListStr.Contains(node.Name))
+                {
+                    nodeListStr.Add(node.Name);
+                }
+
+                NodeNameComboBox.DataSource = nodeListStr;
+
+                if (node.Attributes != null)
+                {
+                    for (int i = 0; i < node.Attributes.Count; i++)
+                    {
+                        string attributeName = node.Attributes.Item(i).Name;
+                        if (!attributeListStr.Contains(attributeName))
+                        {
+                            attributeListStr.Add(attributeName);
+                        }
+                    }
+                }     
+            }
+
+            NodeNameComboBox.DataSource = new List<String>(nodeListStr);
+            NodeNameAttrComboBox.DataSource = new List<String>(nodeListStr);
+            AttributeNameComboBox.DataSource = attributeListStr;
+
+            //var allElements = doc.Descendants();
+        }
+
+        private void generateNodeElementsList(XmlDocument doc)
+        {
+            //TODO implement it
+        }
+
+        private void generateAttributesList(string xmlText)
+        {
+            //TODO implement it
+        }
+
+        private void generateAttributesList(XmlDocument doc)
+        {
+            //TODO implement it
         }
 
         private void showStatusError(string message)
@@ -337,6 +389,93 @@ namespace WindowsFormsCSharpLearning
             string curItem = listBox1.SelectedItem.ToString();
             xPath.Text = curItem.Substring(0, curItem.Length - 1);
             //SubmitButton_Click(sender, new EventArgs());
+
+        }
+
+        private void SearchNodeTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextSearchXPathButtonClick(object sender, EventArgs e)
+        {
+            int selectedNodeNameIndex = NodeNameComboBox.SelectedIndex;
+            if(selectedNodeNameIndex == -1)
+            {
+                MessageBox.Show("Please Select a Node Name", "Node Name Selection",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            String nodeName = NodeNameComboBox.SelectedItem.ToString();
+
+            int selectedConditionIndex = SearchNodeConditionTextComboBox.SelectedIndex;
+            if (selectedConditionIndex == -1)
+            {
+                MessageBox.Show("Enter Search Criteria", "Condition", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            String condition = SearchNodeConditionTextComboBox.SelectedItem.ToString();
+
+            string searchText = SearchNodeTextBox.Text;
+            if (String.IsNullOrEmpty(searchText))
+            {
+                MessageBox.Show("Enter Search Text in the Text Box", "Search Text", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            string oldXPath = xPath.Text;
+            xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[" + condition + "(text(),\"" + searchText + "\")]");
+            MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
+            Console.WriteLine("XPath Text : " + xPath);
+
+        }
+
+        private void AttributeSelectXPathButtonClick(object sender, EventArgs e)
+        {
+            int selectedNodeNameIndex = NodeNameAttrComboBox.SelectedIndex;
+            if (selectedNodeNameIndex == -1)
+            {
+                MessageBox.Show("Please Select a Node Name", "Node Name Selection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            String nodeName = NodeNameAttrComboBox.SelectedItem.ToString();
+
+            int selectedAttributeNameIndex = AttributeNameComboBox.SelectedIndex;
+            if (selectedAttributeNameIndex == -1)
+            {
+                MessageBox.Show("Please Select a Attribute Name", "Attribute", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            String attributeName = AttributeNameComboBox.SelectedItem.ToString();
+
+            int selectedAttributeConditionIndex = AttributeConditionComboBox.SelectedIndex;
+            if (selectedAttributeConditionIndex == -1)
+            {
+                MessageBox.Show("Select Attribute Condition", "Attribute Condition", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            string attributeCondition = AttributeConditionComboBox.SelectedItem.ToString();
+
+            string attrValue = AttributeValueTextBox.Text;
+            if (String.IsNullOrEmpty(attrValue))
+            {
+                MessageBox.Show("Enter Attribute Value in the Text Box", "Attribute Value", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            string oldXPath = xPath.Text;
+            string conditionEquivalent = "";
+            if(attributeCondition.Equals("equals"))
+            {
+                conditionEquivalent = "=";
+            }
+            xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[@"+ attributeName + conditionEquivalent  + "\"" + attrValue + "\"]");
+            MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
+            Console.WriteLine("XPath Text : " + xPath);
 
         }
     }

@@ -42,6 +42,10 @@ namespace WindowsFormsCSharpLearning
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.BrowseFileButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.ErrorRichTextBox = new System.Windows.Forms.RichTextBox();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -49,6 +53,15 @@ namespace WindowsFormsCSharpLearning
             this.xPath = new System.Windows.Forms.TextBox();
             this.ApplyXPath = new System.Windows.Forms.Button();
             this.SubmitButton = new System.Windows.Forms.Button();
+            this.AttributeNameComboBox = new System.Windows.Forms.ComboBox();
+            this.AttributeConditionComboBox = new System.Windows.Forms.ComboBox();
+            this.AttributeValueTextBox = new System.Windows.Forms.TextBox();
+            this.SearchNodeTextBox = new System.Windows.Forms.TextBox();
+            this.NodeNameComboBox = new System.Windows.Forms.ComboBox();
+            this.SearchNodeConditionTextComboBox = new System.Windows.Forms.ComboBox();
+            this.NodeNameAttrComboBox = new System.Windows.Forms.ComboBox();
+            this.TextSearchXPathButton = new System.Windows.Forms.Button();
+            this.AttributeSelectXPathButton = new System.Windows.Forms.Button();
             this.StatusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -83,9 +96,9 @@ namespace WindowsFormsCSharpLearning
             // panel1
             // 
             this.panel1.Controls.Add(this.XPathQueryResultTextBox);
-            this.panel1.Location = new System.Drawing.Point(832, 9);
+            this.panel1.Location = new System.Drawing.Point(832, 41);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(615, 251);
+            this.panel1.Size = new System.Drawing.Size(615, 272);
             this.panel1.TabIndex = 2;
             // 
             // XPathQueryResultTextBox
@@ -94,7 +107,7 @@ namespace WindowsFormsCSharpLearning
             this.XPathQueryResultTextBox.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.XPathQueryResultTextBox.Location = new System.Drawing.Point(0, 0);
             this.XPathQueryResultTextBox.Name = "XPathQueryResultTextBox";
-            this.XPathQueryResultTextBox.Size = new System.Drawing.Size(615, 251);
+            this.XPathQueryResultTextBox.Size = new System.Drawing.Size(615, 272);
             this.XPathQueryResultTextBox.TabIndex = 0;
             this.XPathQueryResultTextBox.Text = "";
             // 
@@ -102,9 +115,9 @@ namespace WindowsFormsCSharpLearning
             // 
             this.panel2.AutoSize = true;
             this.panel2.Controls.Add(this.FullXMLBox);
-            this.panel2.Location = new System.Drawing.Point(6, 9);
+            this.panel2.Location = new System.Drawing.Point(6, 41);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(671, 616);
+            this.panel2.Size = new System.Drawing.Size(674, 631);
             this.panel2.TabIndex = 3;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -113,7 +126,7 @@ namespace WindowsFormsCSharpLearning
             this.FullXMLBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FullXMLBox.Location = new System.Drawing.Point(0, 0);
             this.FullXMLBox.Name = "FullXMLBox";
-            this.FullXMLBox.Size = new System.Drawing.Size(671, 616);
+            this.FullXMLBox.Size = new System.Drawing.Size(674, 631);
             this.FullXMLBox.TabIndex = 0;
             this.FullXMLBox.Text = "";
             this.FullXMLBox.TextChanged += new System.EventHandler(this.FullXMLBox_TextChanged);
@@ -142,6 +155,10 @@ namespace WindowsFormsCSharpLearning
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label4);
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.panel5);
             this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.panel2);
@@ -151,12 +168,49 @@ namespace WindowsFormsCSharpLearning
             this.panel3.Size = new System.Drawing.Size(1450, 628);
             this.panel3.TabIndex = 6;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(844, 485);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(101, 17);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Error Message";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(841, 339);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 17);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "XPath Examples";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(838, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 17);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "XPath Result";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Location = new System.Drawing.Point(15, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 19);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Input XML";
+            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.ErrorRichTextBox);
-            this.panel5.Location = new System.Drawing.Point(832, 425);
+            this.panel5.Location = new System.Drawing.Point(832, 508);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(615, 200);
+            this.panel5.Size = new System.Drawing.Size(615, 117);
             this.panel5.TabIndex = 5;
             // 
             // ErrorRichTextBox
@@ -165,16 +219,16 @@ namespace WindowsFormsCSharpLearning
             this.ErrorRichTextBox.ForeColor = System.Drawing.Color.Red;
             this.ErrorRichTextBox.Location = new System.Drawing.Point(0, 0);
             this.ErrorRichTextBox.Name = "ErrorRichTextBox";
-            this.ErrorRichTextBox.Size = new System.Drawing.Size(615, 200);
+            this.ErrorRichTextBox.Size = new System.Drawing.Size(615, 117);
             this.ErrorRichTextBox.TabIndex = 0;
             this.ErrorRichTextBox.Text = "";
             // 
             // panel4
             // 
             this.panel4.Controls.Add(this.listBox1);
-            this.panel4.Location = new System.Drawing.Point(832, 266);
+            this.panel4.Location = new System.Drawing.Point(832, 362);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(615, 153);
+            this.panel4.Size = new System.Drawing.Size(615, 107);
             this.panel4.TabIndex = 4;
             // 
             // listBox1
@@ -182,9 +236,9 @@ namespace WindowsFormsCSharpLearning
             this.listBox1.ForeColor = System.Drawing.Color.DarkTurquoise;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
+            this.listBox1.Location = new System.Drawing.Point(9, 3);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(609, 132);
+            this.listBox1.Size = new System.Drawing.Size(609, 100);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -222,11 +276,106 @@ namespace WindowsFormsCSharpLearning
             this.SubmitButton.UseVisualStyleBackColor = false;
             this.SubmitButton.Click += new System.EventHandler(this.SubmitButton_Click);
             // 
+            // AttributeNameComboBox
+            // 
+            this.AttributeNameComboBox.FormattingEnabled = true;
+            this.AttributeNameComboBox.Items.AddRange(new object[] {
+            "id"});
+            this.AttributeNameComboBox.Location = new System.Drawing.Point(758, 111);
+            this.AttributeNameComboBox.Name = "AttributeNameComboBox";
+            this.AttributeNameComboBox.Size = new System.Drawing.Size(121, 24);
+            this.AttributeNameComboBox.TabIndex = 10;
+            // 
+            // AttributeConditionComboBox
+            // 
+            this.AttributeConditionComboBox.FormattingEnabled = true;
+            this.AttributeConditionComboBox.Items.AddRange(new object[] {
+            "equals"});
+            this.AttributeConditionComboBox.Location = new System.Drawing.Point(917, 111);
+            this.AttributeConditionComboBox.Name = "AttributeConditionComboBox";
+            this.AttributeConditionComboBox.Size = new System.Drawing.Size(121, 24);
+            this.AttributeConditionComboBox.TabIndex = 11;
+            // 
+            // AttributeValueTextBox
+            // 
+            this.AttributeValueTextBox.Location = new System.Drawing.Point(1070, 111);
+            this.AttributeValueTextBox.Name = "AttributeValueTextBox";
+            this.AttributeValueTextBox.Size = new System.Drawing.Size(233, 22);
+            this.AttributeValueTextBox.TabIndex = 12;
+            // 
+            // SearchNodeTextBox
+            // 
+            this.SearchNodeTextBox.Location = new System.Drawing.Point(917, 45);
+            this.SearchNodeTextBox.Name = "SearchNodeTextBox";
+            this.SearchNodeTextBox.Size = new System.Drawing.Size(386, 22);
+            this.SearchNodeTextBox.TabIndex = 13;
+            this.SearchNodeTextBox.TextChanged += new System.EventHandler(this.SearchNodeTextBox_TextChanged);
+            // 
+            // NodeNameComboBox
+            // 
+            this.NodeNameComboBox.FormattingEnabled = true;
+            this.NodeNameComboBox.Items.AddRange(new object[] {
+            "author"});
+            this.NodeNameComboBox.Location = new System.Drawing.Point(604, 47);
+            this.NodeNameComboBox.Name = "NodeNameComboBox";
+            this.NodeNameComboBox.Size = new System.Drawing.Size(121, 24);
+            this.NodeNameComboBox.TabIndex = 14;
+            // 
+            // SearchNodeConditionTextComboBox
+            // 
+            this.SearchNodeConditionTextComboBox.FormattingEnabled = true;
+            this.SearchNodeConditionTextComboBox.Items.AddRange(new object[] {
+            "contains"});
+            this.SearchNodeConditionTextComboBox.Location = new System.Drawing.Point(758, 45);
+            this.SearchNodeConditionTextComboBox.Name = "SearchNodeConditionTextComboBox";
+            this.SearchNodeConditionTextComboBox.Size = new System.Drawing.Size(121, 24);
+            this.SearchNodeConditionTextComboBox.TabIndex = 15;
+            // 
+            // NodeNameAttrComboBox
+            // 
+            this.NodeNameAttrComboBox.FormattingEnabled = true;
+            this.NodeNameAttrComboBox.Location = new System.Drawing.Point(604, 109);
+            this.NodeNameAttrComboBox.Name = "NodeNameAttrComboBox";
+            this.NodeNameAttrComboBox.Size = new System.Drawing.Size(121, 24);
+            this.NodeNameAttrComboBox.TabIndex = 16;
+            // 
+            // TextSearchXPathButton
+            // 
+            this.TextSearchXPathButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.TextSearchXPathButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.TextSearchXPathButton.Location = new System.Drawing.Point(1359, 47);
+            this.TextSearchXPathButton.Name = "TextSearchXPathButton";
+            this.TextSearchXPathButton.Size = new System.Drawing.Size(75, 23);
+            this.TextSearchXPathButton.TabIndex = 17;
+            this.TextSearchXPathButton.Text = "XPath";
+            this.TextSearchXPathButton.UseVisualStyleBackColor = false;
+            this.TextSearchXPathButton.Click += new System.EventHandler(this.TextSearchXPathButtonClick);
+            // 
+            // AttributeSelectXPathButton
+            // 
+            this.AttributeSelectXPathButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.AttributeSelectXPathButton.Location = new System.Drawing.Point(1359, 109);
+            this.AttributeSelectXPathButton.Name = "AttributeSelectXPathButton";
+            this.AttributeSelectXPathButton.Size = new System.Drawing.Size(75, 23);
+            this.AttributeSelectXPathButton.TabIndex = 18;
+            this.AttributeSelectXPathButton.Text = "XPath";
+            this.AttributeSelectXPathButton.UseVisualStyleBackColor = false;
+            this.AttributeSelectXPathButton.Click += new System.EventHandler(this.AttributeSelectXPathButtonClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1474, 879);
+            this.Controls.Add(this.AttributeSelectXPathButton);
+            this.Controls.Add(this.TextSearchXPathButton);
+            this.Controls.Add(this.NodeNameAttrComboBox);
+            this.Controls.Add(this.SearchNodeConditionTextComboBox);
+            this.Controls.Add(this.NodeNameComboBox);
+            this.Controls.Add(this.SearchNodeTextBox);
+            this.Controls.Add(this.AttributeValueTextBox);
+            this.Controls.Add(this.AttributeConditionComboBox);
+            this.Controls.Add(this.AttributeNameComboBox);
             this.Controls.Add(this.SubmitButton);
             this.Controls.Add(this.ApplyXPath);
             this.Controls.Add(this.xPath);
@@ -270,5 +419,18 @@ namespace WindowsFormsCSharpLearning
         private RichTextBox ErrorRichTextBox;
         private Panel panel4;
         private ListBox listBox1;
+        private ComboBox AttributeNameComboBox;
+        private ComboBox AttributeConditionComboBox;
+        private TextBox AttributeValueTextBox;
+        private TextBox SearchNodeTextBox;
+        private ComboBox NodeNameComboBox;
+        private ComboBox SearchNodeConditionTextComboBox;
+        private ComboBox NodeNameAttrComboBox;
+        private Button TextSearchXPathButton;
+        private Button AttributeSelectXPathButton;
+        private Label label4;
+        private Label label3;
+        private Label label2;
+        private Label label1;
     }
 }
