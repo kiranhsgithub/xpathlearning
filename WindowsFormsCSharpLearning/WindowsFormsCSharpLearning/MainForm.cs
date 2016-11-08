@@ -425,8 +425,52 @@ namespace WindowsFormsCSharpLearning
             }
 
             string oldXPath = xPath.Text;
-            xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[" + condition + "(text(),\"" + searchText + "\")]");
-            //MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
+            if(condition.Equals("contains"))
+            {
+                xPath.Text = xPath.Text.Replace
+                    (nodeName, nodeName + "[" + condition 
+                    + "(text(),\"" + searchText + "\")]");
+            }
+            else if(condition.Equals("starts-with(select parent)"))
+            {
+                //Example 
+                //       /catalog/book[starts-with(author,"Gam")]
+                string part0 = xPath.Text.Substring(0,xPath.Text.IndexOf(nodeName) + nodeName.Length);
+                string part1 = xPath.Text.Substring(xPath.Text.IndexOf(nodeName) + nodeName.Length );
+                string part2 = "";
+                string part3 = "";
+                if (part1.Contains("/"))
+                {
+                    int slashIndex = part1.IndexOf("/",1);
+                    if (slashIndex != -1)
+                    {
+                        part2 = part1.Substring(0, slashIndex);
+                        part3 = part1.Substring(slashIndex, part1.Length);
+                    }else
+                    {
+                        part2 = part1.Substring(1);
+                        part3 = "";
+                        //xPath.Text = part0 + "[starts-with("
+                        //    + part2
+                        //     + ",\"" + searchText + "\")]";
+                    }
+                    
+                }
+                
+                xPath.Text = part0 + "[starts-with("
+                    + part2
+                    + ",\"" + searchText + "\")]"
+                    + part3;
+            }
+            else if (condition.Equals("starts-with(self)"))
+            {
+                //Example 
+                //   /catalog/book/author[starts-with(.,"Gam")]
+                xPath.Text = xPath.Text.Replace
+                    (nodeName, nodeName + "[starts-with(.,\"" + searchText + "\")]");
+            }
+            
+            MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
             Console.WriteLine("XPath Text : " + xPath);
 
         }

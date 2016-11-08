@@ -330,7 +330,9 @@ namespace WindowsFormsCSharpLearning
             // 
             this.SearchNodeConditionTextComboBox.FormattingEnabled = true;
             this.SearchNodeConditionTextComboBox.Items.AddRange(new object[] {
-            "contains"});
+            "contains",
+            "starts-with(select parent)",
+            "starts-with(self)"});
             this.SearchNodeConditionTextComboBox.Location = new System.Drawing.Point(758, 45);
             this.SearchNodeConditionTextComboBox.Name = "SearchNodeConditionTextComboBox";
             this.SearchNodeConditionTextComboBox.Size = new System.Drawing.Size(121, 24);
