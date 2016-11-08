@@ -187,7 +187,7 @@ namespace WindowsFormsCSharpLearning
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(841, 339);
+            this.label3.Location = new System.Drawing.Point(832, 342);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(110, 17);
             this.label3.TabIndex = 8;
@@ -243,9 +243,9 @@ namespace WindowsFormsCSharpLearning
             this.listBox1.ForeColor = System.Drawing.Color.DarkTurquoise;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(9, 3);
+            this.listBox1.Location = new System.Drawing.Point(3, 3);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(609, 100);
+            this.listBox1.Size = new System.Drawing.Size(615, 100);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -321,8 +321,6 @@ namespace WindowsFormsCSharpLearning
             // NodeNameComboBox
             // 
             this.NodeNameComboBox.FormattingEnabled = true;
-            this.NodeNameComboBox.Items.AddRange(new object[] {
-            "author"});
             this.NodeNameComboBox.Location = new System.Drawing.Point(604, 47);
             this.NodeNameComboBox.Name = "NodeNameComboBox";
             this.NodeNameComboBox.Size = new System.Drawing.Size(121, 24);
