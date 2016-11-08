@@ -426,7 +426,7 @@ namespace WindowsFormsCSharpLearning
 
             string oldXPath = xPath.Text;
             xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[" + condition + "(text(),\"" + searchText + "\")]");
-            MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
+            //MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
             Console.WriteLine("XPath Text : " + xPath);
 
         }
@@ -474,7 +474,7 @@ namespace WindowsFormsCSharpLearning
                 conditionEquivalent = "=";
             }
             xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[@"+ attributeName + conditionEquivalent  + "\"" + attrValue + "\"]");
-            MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
+            //MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
             Console.WriteLine("XPath Text : " + xPath);
 
         }
