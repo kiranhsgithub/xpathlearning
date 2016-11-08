@@ -593,7 +593,30 @@ namespace WindowsFormsCSharpLearning
             {
                 conditionEquivalent = "=";
             }
-            xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[@"+ attributeName + conditionEquivalent  + "\"" + attrValue + "\"]");
+
+            string replacableValue = nodeName + "[@";
+
+            if (xPath.Text.Contains(replacableValue))
+            {
+                string xpath = xPath.Text.Substring(0, xPath.Text.IndexOf(replacableValue)
+                    + replacableValue.Length);
+
+                string tempPart = xPath.Text.Substring(xPath.Text.IndexOf(replacableValue)
+                    + replacableValue.Length);
+
+                string finalPart = tempPart.Substring(tempPart.IndexOf("\"]"));
+                xPath.Text = xpath + attributeName + conditionEquivalent 
+                    + "\"" + attrValue 
+                    + finalPart;
+            }
+            else
+            {
+                xPath.Text = xPath.Text.Replace(nodeName, nodeName 
+                    + "[@" + attributeName + conditionEquivalent + "\"" + attrValue + "\"]");
+
+            }
+
+            //xPath.Text = xPath.Text.Replace(nodeName, nodeName + "[@"+ attributeName + conditionEquivalent  + "\"" + attrValue + "\"]");
             //MessageBox.Show(" Old XPath : " + oldXPath + " \n New XPath : " + xPath.Text);
             Console.WriteLine("XPath Text : " + xPath);
 
